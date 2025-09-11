@@ -32,7 +32,6 @@ type Profile {
   last_name: String!
   birth_date: DateTime!
   picture: String
-  user: ID!
 }
 
 type Post {
@@ -56,8 +55,7 @@ enum ROOM_TYPES {
 }
 
 type UserSession {
-  id: String
-  email: String!
+  user: User!
   accessToken: String!
 }
 

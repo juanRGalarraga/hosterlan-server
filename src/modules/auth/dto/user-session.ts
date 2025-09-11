@@ -1,12 +1,10 @@
+import { User } from "@app/database/schemas/users.schema";
 import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class UserSession {
-  @Field(() => String, { nullable: true })
-  id?: string;
-
-  @Field(() => String)
-  email!: string;
+  @Field(() => User)
+  user: User;
 
   @Field(() => String)
   accessToken!: string;

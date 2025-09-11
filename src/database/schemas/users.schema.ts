@@ -2,6 +2,7 @@ import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as SchemaMongoose } from 'mongoose';
 import { BaseModel } from './base-model.schema';
+import { Profile } from './profiles.schema';
 
 
 export type UserDocument = HydratedDocument<User>;
@@ -33,7 +34,7 @@ export class User extends BaseModel {
 
   @Field(() => ID, { nullable: true })
   @Prop({ type: SchemaMongoose.Types.ObjectId, ref: 'Profile' })
-  profile?: SchemaMongoose.Types.ObjectId;
+  profile?: SchemaMongoose.Types.ObjectId | Profile;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

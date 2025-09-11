@@ -38,7 +38,10 @@ export class UserService {
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    return await this.userModel.findOne({ email }).exec();
+    return await this.userModel.findOne({ email })
+      .populate('profile')
+      .lean()
+      .exec();
   }
 
   async update(id: number, updateUserInput: UpdateUserInput) {

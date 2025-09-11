@@ -23,8 +23,7 @@ export class AuthService {
 
     if (user && isMatch) {
       return {
-        id: user._id.toString(),
-        email: user.email,
+        user: user,
         accessToken: this.jwtService.sign({ id: user._id.toString(), email: user.email }),
       };
     }
@@ -48,6 +47,6 @@ export class AuthService {
    * @returns The jwt token.
    */
   async refresh(user: UserSession): Promise<string> {
-    return this.jwtService.sign({ id: user.id, email: user.email });
+    return this.jwtService.sign({ id: user.user._id, email: user.user.email });
   }
 }

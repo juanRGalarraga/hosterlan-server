@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { PostsService } from './posts.service';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
@@ -6,7 +6,7 @@ import { Post } from '@app/database/schemas/posts.schema';
 import { PaginationInput } from '@app/common/dto/pagination.input';
 import { PaginatedPosts } from './dto/paginated.result';
 import { UserService } from '../user/user.service';
-import { User } from '@app/database/schemas/users.schema';
+import { Public } from '@app/common/decorators/public.decorator';
 
 @Resolver(() => Post)
 export class PostsResolver {
@@ -25,6 +25,7 @@ export class PostsResolver {
     return this.postsService.create(createPostInput);
   }
 
+  @Public()
   @Query(() => PaginatedPosts, { name: 'posts' })
   async findAll(
     @Args('pagination', { type: () => PaginationInput, nullable: true })

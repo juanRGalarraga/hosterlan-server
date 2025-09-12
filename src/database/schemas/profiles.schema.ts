@@ -17,9 +17,9 @@ export class Profile extends BaseModel {
   @Prop({ type: String, required: true, maxLength: 100 })
   last_name: string;
 
-  @Field(() => Date)
-  @Prop({ type: Date, required: true })
-  birth_date: Date;
+  @Field(() => Date, { nullable: true })
+  @Prop({ type: Date})
+  birth_date?: Date;
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, required: false })

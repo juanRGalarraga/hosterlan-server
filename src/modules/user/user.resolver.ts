@@ -19,6 +19,7 @@ export class UserResolver {
     return await this.userService.findOneByEmail(email);
   }
 
+  @Public()
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return await this.userService.create(createUserInput);

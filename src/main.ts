@@ -17,7 +17,7 @@ async function bootstrap() {
   app.useGlobalFilters(new GqlValidationFilter());
   
   app.enableCors({
-    origin: ['http://localhost:4321'],
+    origin: ['http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true
   });

@@ -11,12 +11,6 @@ export class ProfilesResolver {
     private readonly profilesService: ProfilesService,
   ) { }
 
-  @Public()
-  @Mutation(() => Profile)
-  createProfile(@Args('createProfileInput') createProfileInput: CreateProfileInput) {
-    return this.profilesService.create(createProfileInput);
-  }
-
   @Query(() => [Profile], { name: 'profiles' })
   findAll() {
     return this.profilesService.findAll();

@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@database/schemas/users.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { ProfilesService } from '../profiles/profiles.service';
 
 @Injectable()
 export class UserService {
@@ -13,19 +14,27 @@ export class UserService {
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
+    private readonly profileService: ProfilesService
   ) {
     console.log('UserService initialized', userModel);
   }
 
+
   async create(createUserInput: CreateUserInput) {
+
     const hashedPassword = await bcrypt.hash(
       createUserInput.password,
       this.SALT_ROUNDS,
     );
+
+    const profile = await this.profileService.create(createUserInput.profile);
+
     const user = new this.userModel({
       ...createUserInput,
+      profile: profile._id,
       password: hashedPassword,
     });
+
     return user.save();
   }
 
@@ -38,10 +47,13 @@ export class UserService {
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    return await this.userModel.findOne({ email })
+    const user = await this.userModel.findOne({ email })
       .populate('profile')
-      .lean()
       .exec();
+    
+    console.log("PROFILE", user?.profile);
+
+    return user;
   }
 
   async update(id: number, updateUserInput: UpdateUserInput) {

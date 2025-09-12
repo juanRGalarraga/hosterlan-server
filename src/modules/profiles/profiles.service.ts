@@ -13,22 +13,12 @@ export class ProfilesService {
   constructor(
     @InjectModel(Profile.name) 
     private readonly profileModel: Model<ProfileDocument>,
-    private readonly userService: UserService
   ){}
 
-  async create(createProfileInput: CreateProfileInput) {
-
-    const userFound = await this.userService.findOneByEmail(createProfileInput.user.email);
-
-    if (userFound instanceof User) {
-      throw new Error('User already exists');
-    }
-
-    const user = await this.userService.create(createProfileInput.user);
-    
-    const profile = new this.profileModel({ ...createProfileInput, user: user._id });
-
-    return profile.save();
+  async create(createProfileInput: CreateProfileInput) : Promise<Profile> {
+    const profile = new this.profileModel(createProfileInput);
+    const profileCreated = profile.save();
+    return profileCreated;
   }
 
   findAll() {

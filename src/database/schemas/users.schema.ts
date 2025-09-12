@@ -32,9 +32,9 @@ export class User extends BaseModel {
   @Prop({ type: String, enum: ROLES, default: ROLES.GUEST })
   role: ROLES;
 
-  @Field(() => ID, { nullable: true })
+  @Field(() => Profile)
   @Prop({ type: SchemaMongoose.Types.ObjectId, ref: 'Profile' })
-  profile?: SchemaMongoose.Types.ObjectId | Profile;
+  profile: SchemaMongoose.Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

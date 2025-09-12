@@ -24,7 +24,7 @@ export class AuthService {
     if (user && isMatch) {
       return {
         user: user,
-        accessToken: this.jwtService.sign({ id: user._id.toString(), email: user.email }),
+        accessToken: this.jwtService.sign({ id: user._id, email: user.email }),
       };
     }
 

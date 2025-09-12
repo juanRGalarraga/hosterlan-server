@@ -5,6 +5,7 @@ import {
 } from 'class-validator';
 import { USER_CONSTANTS } from '../constants';
 import { ROLES } from '@app/database/schemas/users.schema';
+import { CreateProfileInput } from '@app/modules/profiles/dto/create-profile.input';
 
 @InputType()
 export class CreateUserInput {
@@ -20,4 +21,7 @@ export class CreateUserInput {
 
   @Field(() => ROLES, { description: 'User role', defaultValue: ROLES.GUEST })
   role: ROLES;
+
+  @Field(() => CreateProfileInput)
+  profile: CreateProfileInput;
 }
